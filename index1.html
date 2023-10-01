@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body onkeydown="myfunction(event)">
+    
+    <div id="circle1" style=" top: 20%; left: 50%; width: 50px; height: 50px; position: fixed; border: 1px solid; border-radius: 50px; text-align: center; justify-content: center; align-items: center; display: flex; background-color: orange;">
+        circle1
+    </div>
+    <div id="circle2" style=" position: fixed; z-index: 1;width: 50px; height: 50px; border: 1px solid orange; border-radius: 50px; text-align: center; justify-content: center; align-items: center; display: flex;">
+        circle2
+    </div>
+    <script>
+        let topElement = 0;
+        let leftElement = 0;
+        function myfunction(e){
+            if (e.code =="ArrowRight"){
+                leftElement+=1
+                let element = document.getElementById("circle2");
+                element.style.left = `${leftElement}px`;
+            }
+            if (e.code =="ArrowUp"){
+                
+                topElement-=1
+                let element = document.getElementById("circle2");
+                element.style.top = `${topElement}px`;
+            }
+            if (e.code =="ArrowDown"){
+                topElement+=1
+                let element = document.getElementById("circle2");
+                element.style.top = `${topElement}px`;
+            }
+            if(e.code =="ArrowLeft"){
+                leftElement-=1
+                let element = document.getElementById("circle2");
+                element.style.left = `${leftElement}px`;
+            }
+ 
+        }
+    </script>
+</body>
+</html>

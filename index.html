@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #cornometer{
+            width: 300px;
+            height: 50px;
+            color: white;
+            background-color: rgb(70, 70, 70);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: x-large;
+        }
+        #cornometer > span {
+            padding: 0px 10px 0px 10px;
+        }
+        #start-button {
+            margin-top: 10px;
+            width: 60px;
+             height: 20px;
+             background-color: green;
+             color: white;
+             border: 1px solid;
+        }
+        #stop-button{
+            margin-top: 10px;
+            width: 60px;
+             height: 20px;
+             background-color: red;
+             color: white;
+             border: 1px solid;
+        }
+        #reset-button{
+            margin-top: 10px;
+            width: 60px;
+             height: 20px;
+             background-color: rgb(213, 235, 16);
+             color: white;
+             border: 1px solid;
+        }
+        #capture-button{
+            margin-top: 10px;
+            width: 60px;
+             height: 20px;
+             background-color: rgb(0, 0, 0);
+             color: white;
+             border: 1px solid;
+        }
+        table , tr , th , td{
+            border: 1px solid red;
+            border-collapse: collapse;
+        }
+        table {
+            width: 30%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cornometer">
+        <span id="min">0</span>
+        <span>:</span>
+        <span id="sec">0</span>
+        <span>:</span>
+        <span id="ms">000</span>
+    </div>
+    <button id="start-button" onclick="cornostart()">start</button>
+    <button id="stop-button" onclick=" cornoStop()">stop</button>
+    <button id="reset-button" onclick="cornoReset()">Reset</button>
+    <button id="capture-button" onclick="captureCorno()">capture</button>
+    <div>
+        <table>
+            <tr>
+                <th>Min</th>
+                <th>sec</th>
+                <th>ms</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let cornotime = 0;
+        let isecond = 0;
+        let iminute = 0;
+        let cornoInterval = null;
+        let captureArray = [];
+        function cornostart (){
+           cornoInterval =  setInterval(
+                function(){
+                    cornotime+=5;
+                   
+                    if (cornotime >= 1000){
+                        isecond++;
+                        document.getElementById("sec").innerHTML = isecond;
+                        cornotime = 0;
+                    } if (isecond >= 60){
+                        iminute++;
+                        document.getElementById("min").innerHTML = iminute;
+                        isecond = 0;
+                    }
+                    document.getElementById("ms").innerHTML = cornotime;
+                },
+                1
+            )
+        }
+        function cornoStop(){
+            clearInterval(cornoInterval);
+        }
+        function cornoReset (){
+            document.getElementById("sec").innerHTML = 0;
+            document.getElementById("min").innerHTML = 0;
+            document.getElementById("ms").innerHTML = 0;
+            captureArray = [];
+            showInTable();
+        }
+        function captureCorno() {
+            let ctime = {   
+                ms : cornotime,
+                sec : isecond,
+                min : iminute
+            }  
+             captureArray.push(ctime);
+             console.log(ctime);
+             showInTable();
+        }
+        function showInTable(){
+            let table = document.getElementsByTagName("table")[0];
+            table.innerHTML = "";
+            captureArray.forEach(function (item) {
+                table.innerHTML += `
+                <tr>
+                    <td>${item.min}</td>
+                    <td>${item.sec}</td>
+                    <td>${item.ms}</td>
+                    
+                    </tr>
+                
+                `
+            });
+        }
+        console.log(document.getElementsByTagName("table")[0]);
+    </script>
+</body>
+</html>
